@@ -58,7 +58,7 @@ class CreateBoldApiKey extends Component
                     </div>
 
                     <div class="col-span-6 sm:col-span-4">
-                        <x-label for="boldToken" value="{{ __('Bold Key Secret') }}" />
+                        <x-label for="boldToken" value="{{ __('Bold Bearer Token') }}" />
                         <x-input id="boldToken" type="password" class="mt-1 block w-full" wire:model="boldToken" />
                         <x-input-error for="boldToken" class="mt-2" />
                     </div>
