@@ -1,0 +1,16 @@
+name: "Continous Deployment"
+
+on:
+  push:
+    branches: ["main", "staging"]
+
+jobs:
+  ploi-production:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Trigger Ploi
+        uses: distributhor/workflow-webhook@v3
+        env:
+          webhook_url: ${{ secrets.PLOI_PRODUCTION_URL }}

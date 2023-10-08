@@ -1,0 +1,15 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+
+    level: 8
+
+    # https://phpstan.org/user-guide/ignoring-errors#generate-an-ignoreerrors-entry
+    ignoreErrors:
+        # - "#Possibly invalid array key type (array|string)#"
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
