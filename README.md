@@ -98,8 +98,6 @@ php artisan view:cache
 echo
 echo "🔀 Run migrations"
 php artisan migrate --force
-php artisan db:seed --force --class=PermissionAndRoleSeeder
-php artisan db:seed --force --class=CountrySeeder
 
 echo
 echo "🏁 Disable maintenance mode"
