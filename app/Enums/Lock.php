@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use App\Enums\Support\Values;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 
@@ -25,7 +26,7 @@ enum Lock: string
                 'owner'  => $owner->id,
                 'causer' => $causer,
             ],
-            expiration: now()->addHours($expiration) // TODO: accept 1hr, 2days, etc
+            expiration: new Carbon($expiration)
         );
     }
 

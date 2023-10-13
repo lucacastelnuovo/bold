@@ -4,10 +4,14 @@
 
 ### Todo
 
--   [ ] Get user locks from bold API
--   [ ] Only display logs for the locks the user has access to
--   [ ] Specify which locks the link has access to
--   [ ] Specify which locks the api token has access to
+-   [ ] Implement Jetstream Teams and call it Homes
+-   [ ] Configure Bold Credentials on Homes
+-   [ ] Get Locks in Home from Bold API
+
+-   [ ] Show all Locks logs in Home
+
+-   [ ] Link is scoped per home
+-   [ ] API token is scoped per home
 
 ### How to get an Bold Bearer token?
 

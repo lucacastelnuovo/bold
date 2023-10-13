@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Enums\Lock;
+use App\Rules\Expiration;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -11,8 +12,8 @@ class LockLinkCreator extends Component
     #[Rule('required|string|min:3|max:32')]
     public string $name = '';
 
-    #[Rule('required|int|lte:24')]
-    public string $expiration = '24';
+    #[Rule(['required', new Expiration])]
+    public string $expiration = '24 hours';
 
     public string $link = '';
     public bool $displayingLink = false;
@@ -46,13 +47,13 @@ class LockLinkCreator extends Component
                     <x-slot name="form">
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="name" value="{{ __('Naam van uitgenodigde') }}" />
-                            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="name" required />
+                            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.blur="name" required />
                             <x-input-error for="name" class="mt-2" />
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="expiration" value="{{ __('Geldigheidsduur van uitnodiging') }}" />
-                            <x-input id="expiration" type="text" class="mt-1 block w-full" wire:model="expiration"
+                            <x-input id="expiration" type="text" class="mt-1 block w-full" wire:model.blur="expiration"
                             required />
                             <x-input-error for="expiration" class="mt-2" />
                         </div>
