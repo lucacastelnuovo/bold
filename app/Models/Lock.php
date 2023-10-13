@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,19 +10,9 @@ use Spatie\Activitylog\Models\Activity;
 
 class Lock extends Model
 {
-    protected static function booted(): void
+    public function home(): BelongsTo
     {
-        // TODO: test the belongs to user global scope
-        static::addGlobalScope('user', function (Builder $builder) {
-            $builder->when(auth()->check(), function (Builder $builder) {
-                $builder->where('user_id', auth()->id());
-            });
-        });
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Home::class);
     }
 
     public function activity(): HasMany
@@ -31,15 +20,15 @@ class Lock extends Model
         return $this->hasMany(Activity::class);
     }
 
-    public function trigger(User $owner, string $causer): string
+    public function trigger(string $causer): string
     {
-        if (blank($owner->bold_key_id) || blank($owner->bold_key_secret)) {
+        if (blank($this->home->bold_key_id) || blank($this->home->bold_key_secret)) {
             return 'error: api key missing';
         }
 
         $response = Http::acceptJson()
             ->withHeader('Bold-Client-Token', config('services.bold.firewall_key'))
-            ->withBasicAuth($owner->bold_key_id, $owner->bold_key_secret)
+            ->withBasicAuth($this->home->bold_key_id, $this->home->bold_key_secret)
             ->post("https://api.boldsmartlock.com/v1/devices/{$this->bold_id}/remote-activation");
 
         if ($response->failed()) {
@@ -51,10 +40,13 @@ class Lock extends Model
         }
 
         activity()
-            ->causedBy($owner)
+            ->causedBy($this->home)
             ->performedOn($this)
             ->event('lockActivated')
-            ->log("{$causer} heeft de {$this->value} geopend");
+            ->log(__(":causer heeft de :lock geopend", [
+                'causer' => $causer,
+                'lock' => $this->name,
+            ]));
 
         return 'ok';
     }

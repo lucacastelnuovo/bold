@@ -8,10 +8,14 @@
 -   [ ] Configure Bold Credentials on Homes
 -   [ ] Get Locks in Home from Bold API
 
--   [ ] Show all Locks logs in Home
+-   [ ] Show all Locks Activity in Home
 
 -   [ ] Link is scoped per home
 -   [ ] API token is scoped per home
+
+-   [ ] Store a signing key per Home
+-   [ ] Allow rotating the signing key per Home (and invalidate all links)
+-   [ ] This action should also invalidate all API keys for that home
 
 ### How to get an Bold Bearer token?
 
