@@ -62,34 +62,42 @@ echo "Branch: {BRANCH}"
 echo "Commit: {COMMIT_HASH}"
 echo "============================"
 
+export APP_ENV="production"
+# export LARAVEL_ENV_ENCRYPTION_KEY=""
+
 echo
-echo "📂 Go to project directory"
+echo "--- Goto Directory ---"
 cd {SITE_DIRECTORY}
 
 echo
-echo "🚧 Enable maintenance mode"
-php artisan down --refresh 30 || true
+echo "--- Enable Maintenance Mode ---"
+if [ -f artisan ]; then
+    php artisan down --refresh 30 || true
+fi
 
 echo
-echo "📚 Pull the repository"
+echo "--- Pull Changes ---"
 git pull origin {BRANCH}
 
 echo
-echo "💾 Install back-end dependencies"
-# Remove --no-dev for staging environment
-composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-
-echo
-echo "💾 Install front-end dependencies"
+echo "--- Install Front-End Dependencies ---"
 yarn install --immutable
 yarn run build
 
 echo
-echo "💣 Restart FPM"
+echo "--- Install Back-End Dependencies ---"
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+echo
+echo "--- Restart FPM ---"
 {RELOAD_PHP_FPM}
 
 echo
-echo "🧹 Clear caches"
+echo "--- Decrypt .env ---"
+php artisan env:decrypt --force --filename=.env --env=$APP_ENV
+
+echo
+echo "--- Clear Caches ---"
 php artisan cache:clear
 php artisan config:clear
 php artisan event:clear
@@ -97,21 +105,21 @@ php artisan route:clear
 php artisan view:clear
 
 echo
-echo "🪛 Build caches"
+echo "--- Rebuild Caches ---"
 php artisan config:cache
 php artisan event:cache
 php artisan route:cache
 php artisan view:cache
 
 echo
-echo "🔀 Run migrations"
+echo "--- Run Migrations ---"
 php artisan migrate --force
 
 echo
-echo "🏁 Disable maintenance mode"
+echo "--- Disable Maintenance Mode ---"
 php artisan up
 
 echo
-echo "🚀 Deployment completed!"
+echo "--- Deployment Complete ---"
 php artisan about
 ```

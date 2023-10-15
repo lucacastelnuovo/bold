@@ -10,7 +10,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Trigger Ploi
+      - name: Trigger Webhook
         uses: distributhor/workflow-webhook@v3
         env:
           webhook_url: ${{ secrets.PLOI_PRODUCTION_URL }}
