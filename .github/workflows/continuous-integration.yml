@@ -1,10 +1,7 @@
 name: "Continous Integration"
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    types: [synchronize, opened, reopened]
 
 jobs:
   php-82:
@@ -28,23 +25,27 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install back-end dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Install Back-End Dependencies
+        run: composer install --no-interaction --prefer-dist --no-scripts
 
-      - name: Install front-end dependencies
-        run: yarn install --immutable
+      - name: Install Front-End Dependencies
+        run: |
+          yarn install --immutable
+          yarn run build
 
-      - name: Setup back-end environment
+      - name: Setup .env
         run: |
           cp .env.ci .env
           php artisan key:generate
-          php artisan migrate --seed
 
-      - name: Setup front-end environment
-        run: yarn build
+      - name: Run Migrations
+        run: php artisan migrate --force
+
+      - name: Run Seeders
+        run: php artisan db:seed --force
 
       - name: Run linter
         run: composer lint-ci
