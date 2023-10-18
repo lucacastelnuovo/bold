@@ -43,9 +43,8 @@ class Lock extends Model
             ->causedBy($this->home)
             ->performedOn($this)
             ->event('lockActivated')
-            ->log(__(":causer heeft de :lock geopend", [
+            ->log(__(':causer heeft de :subject.name geopend', [
                 'causer' => $causer,
-                'lock' => $this->name,
             ]));
 
         return 'ok';
