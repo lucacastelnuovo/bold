@@ -1,0 +1,36 @@
+# Composer
+/vendor
+
+# NPM
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# Env
+.env
+.env.backup
+.env.staging
+.env.production
+
+# Public
+/public/build
+/public/hot
+/public/storage
+/public/css
+/public/js
+
+# Testing
+/.phpunit.cache
+.phpunit.result.cache
+
+# Deployment
+/.vapor
+
+# Editors
+/.vscode
+_ide_*.php
+.phpstorm.meta.php
+.phpactor.json
+
+# MacOS
+.DS_Store
