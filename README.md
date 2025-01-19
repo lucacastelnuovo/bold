@@ -40,3 +40,4 @@ herd open
 5. Open: https://portal.boldsmartlock.com/
 6. Login with your Bold credentials
 7. From "HTTP History" copy `access_token` & `refresh_token`
+<img width="1429" alt="burpsuite" src="https://github.com/user-attachments/assets/3ef038fe-f33c-4dd5-a0d5-ad010c407a33" />
