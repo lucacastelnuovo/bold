@@ -6,7 +6,7 @@ use App\Http\Controllers\ApiShareController;
 use App\Http\Controllers\ApiUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->as('v1:')->middleware('auth:sanctum')->group(function (): void {
+Route::prefix('v1')->middleware('auth:sanctum')->group(function (): void {
     Route::get('user', [ApiUserController::class, 'show']);
     Route::post('user/tokens', [ApiUserController::class, 'storeTokens']);
 
