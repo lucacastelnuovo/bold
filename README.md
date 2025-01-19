@@ -31,7 +31,13 @@ composer dev
 herd open
 ```
 
-### How to get an Bold Bearer token?
+### How to get an API token?
+
+1. `php artisan app:create-user "Luca Castelnuovo" luca@castelnuovo.dev`
+2. `php artisan app:create-token 1 "iPhone van Luca" lock.activate share.create activity.view`
+3. `php artisan app:create-token 1 "MacBook van Luca" user.tokens.update lock.sync lock.activate share.create activity.view`
+
+### How to get an Bold token?
 
 1. Start BurpSuite
 2. Add `https://boldsmartlock.com` (including subdomain) to scope
@@ -41,6 +47,10 @@ herd open
 6. Login with your Bold credentials
 7. From "HTTP History" copy `access_token` & `refresh_token`
    <img width="1429" alt="burpsuite" src="https://github.com/user-attachments/assets/3ef038fe-f33c-4dd5-a0d5-ad010c407a33" />
+
+### How to store the Bold token using the API token?
+
+> todo
 
 ### Forge
 
